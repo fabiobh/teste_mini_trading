@@ -14,7 +14,30 @@ Esta é uma aplicação de API REST para uma plataforma simplificada de trading 
 
 ---
 
-## ⚙️ Como rodar o projeto
+## ⚙️ Modos de Execução
+
+Você pode rodar este projeto de duas formas: usando **Docker** (recomendado para quem não quer configurar o ambiente PHP) ou de forma **Local** (para quem já tem PHP e Composer instalados).
+
+---
+
+### 🐳 Opção 1: Rodando com Docker (Recomendado)
+
+Esta opção sobe um ambiente isolado com **PHP 8.3-fpm** e **Nginx**.
+
+1.  Certifique-se de que o Docker Desktop está em execução.
+2.  Na **raiz do projeto** (onde está o arquivo `docker-compose.yml`), execute:
+    ```bash
+    docker-compose up -d --build
+    ```
+3.  Aguarde a inicialização automática (o Docker instalará as dependências e migrará o banco).
+4.  **Endereço**: A API estará disponível em: `http://localhost:8001/api`.
+
+> [!TIP]
+> O arquivo `database/database.sqlite` é compartilhado. O que você fizer no Docker refletirá na versão local e vice-versa.
+
+---
+
+### 🛠️ Opção 2: Rodando Localmente (Sem Docker)
 
 ### 1. Pré-requisitos
 Certifique-se de ter o **PHP 8.2 ou superior** e o **Composer** instalados em sua máquina.
