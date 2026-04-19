@@ -16,6 +16,7 @@ Interface de compra e venda com cálculos dinâmicos e feedback visual.
 
 ### 📜 Histórico
 Lista de transações detalhada com status e valores.
+
 ![History](front_react_native/assets/screenshots/history.png)
 
 ---
