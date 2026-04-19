@@ -58,12 +58,9 @@ npm run start
 
 ---
 
-## 🔑 Credenciais para Teste
+## 🔑 Acesso ao App
 
-Você pode criar uma nova conta diretamente no app ou usar o usuário de teste padrão criado pelo seeder do backend:
-
-- **E-mail:** `test@example.com`
-- **Senha:** `password`
+Você pode criar uma nova conta diretamente no aplicativo na tela de Cadastro. Basta informar nome, e-mail e senha para começar a testar as funcionalidades com o saldo inicial padrão.
 
 ---
 

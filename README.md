@@ -53,10 +53,9 @@ npm run start
 
 ---
 
-## 🔑 Credenciais para Teste
+## 🔑 Acesso ao App
 
-- **E-mail:** `test@example.com`
-- **Senha:** `password`
+Você pode criar uma nova conta diretamente no aplicativo na tela de Cadastro. Basta informar nome, e-mail e senha para começar a testar as funcionalidades com o saldo inicial padrão.
 
 ---
 
