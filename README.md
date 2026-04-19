@@ -23,8 +23,11 @@ Lista de transações detalhada com status e valores.
 
 ## 🛠️ Tecnologias Principais
 
-- **Backend:** Laravel 11, SQLite, Sanctum (Auth), Pest (Tests).
+- **Backend:** Laravel 13.5, SQLite, Sanctum (Auth), Pest (Tests).
 - **Frontend Mobile:** React Native, Expo, NativeWind v4 (Tailwind), Lucide Icons.
+
+> [!CAUTION]
+> **⚠️ NOTA SOBRE SEGURANÇA:** O arquivo `.env` do backend foi incluído propositalmente neste repositório para facilitar a execução imediata pelo avaliador, eliminando a necessidade de configuração manual. Em um ambiente de produção real, este arquivo **nunca** deve ser versionado, pois contém chaves sensíveis.
 
 ---
 

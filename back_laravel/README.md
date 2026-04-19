@@ -1,4 +1,4 @@
-# Mini Binance – Backend (Laravel 12)
+# Mini Binance – Backend (Laravel 13)
 
 Esta é uma aplicação de API REST para uma plataforma simplificada de trading de Bitcoin (BTC), construída como parte de um teste técnico.
 
