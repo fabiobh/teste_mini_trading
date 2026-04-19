@@ -6,12 +6,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        dark: "#0B0E11",
-        "dark-secondary": "#1E2329",
-        primary: "#F3BA2F",
-        success: "#0ECB81",
-        danger: "#F6465D",
-        "gray-text": "#848E9C",
+        dark: "#0F172A",
+        "dark-secondary": "#1E293B",
+        primary: "#3B82F6", // Modern Blue instead of Yellow
+        "primary-light": "#60A5FA",
+        success: "#10B981", // Emerald 
+        danger: "#EF4444", // Red 500
+        "gray-text": "#94A3B8", // Slate 400
+        "glass": "rgba(30, 41, 59, 0.7)",
       },
     },
   },

@@ -1,6 +1,24 @@
 # Mini Binance App – Mobile (Frontend)
 
-Este é o aplicativo móvel da plataforma Mini Binance, desenvolvido com React Native e Expo.
+![Mini Binance Login Screen](./assets/screenshot-login.png)
+
+Este é o aplicativo móvel da plataforma Mini Binance, desenvolvido com React Native e Expo, utilizando um design premium e responsivo.
+
+## 📸 Demonstração da Interface Moderna
+
+### 🏠 Dashboard
+Dashboard premium com saldo em tempo real, cotação do BTC e atalhos rápidos.
+![Dashboard](assets/screenshots/dashboard.png)
+
+### 📈 Negociação (Trade)
+Interface de compra e venda com cálculos dinâmicos e feedback visual.
+| Compra (Buy) | Venda (Sell) |
+| :---: | :---: |
+| ![Trade Buy](assets/screenshots/trade-buy.png) | ![Trade Sell](assets/screenshots/trade-sell.png) |
+
+### 📜 Histórico
+Lista de transações detalhada com status e valores.
+![History](assets/screenshots/history.png)
 
 ## 🚀 Como Executar o App
 
@@ -37,6 +55,15 @@ npm run start
 ### 4. Abrindo o App
 - **Celular Físico**: Baixe o app **Expo Go**, abra a câmera do celular e escaneie o QR Code que aparecerá no terminal.
 - **Emulador**: Pressione `a` para Android ou `i` para iOS no terminal onde o Expo está rodando.
+
+---
+
+## 🔑 Credenciais para Teste
+
+Você pode criar uma nova conta diretamente no app ou usar o usuário de teste padrão criado pelo seeder do backend:
+
+- **E-mail:** `test@example.com`
+- **Senha:** `password`
 
 ---
 

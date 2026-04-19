@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, SafeAreaView, TextInput, TouchableOpacity, Alert, ActivityIndicator, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, Text, SafeAreaView, TextInput, TouchableOpacity, Alert, ActivityIndicator, KeyboardAvoidingView, Platform, StatusBar } from 'react-native';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
-import { ArrowUpRight, ArrowDownLeft } from 'lucide-react-native';
+import { ArrowUpRight, ArrowDownLeft, TrendingUp } from 'lucide-react-native';
 
 const TradeScreen = () => {
     const { user, refreshUser } = useAuth();
@@ -25,7 +25,8 @@ const TradeScreen = () => {
     }, []);
 
     const handleTrade = async () => {
-        if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
+        const numAmount = parseFloat(amount.replace(',', '.'));
+        if (!amount || isNaN(numAmount) || numAmount <= 0) {
             Alert.alert('Erro', 'Insira um valor válido');
             return;
         }
@@ -33,11 +34,11 @@ const TradeScreen = () => {
         try {
             setLoading(true);
             if (mode === 'buy') {
-                await api.post('/trade/buy', { amount_brl: Number(amount) });
-                Alert.alert('Sucesso', `Você comprou BTC com sucesso!`);
+                await api.post('/trade/buy', { amount_brl: numAmount });
+                Alert.alert('Sucesso', 'Você comprou BTC com sucesso!');
             } else {
-                await api.post('/trade/sell', { amount_btc: Number(amount) });
-                Alert.alert('Sucesso', `Você vendeu seu BTC com sucesso!`);
+                await api.post('/trade/sell', { amount_btc: numAmount });
+                Alert.alert('Sucesso', 'Você vendeu seu BTC com sucesso!');
             }
             setAmount('');
             await refreshUser();
@@ -49,75 +50,86 @@ const TradeScreen = () => {
         }
     };
 
+    const formatBRL = (val: number) => {
+        return 'R$ ' + val.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
+
     const calculatedEstimate = () => {
-        if (!amount || !price) return '0.00000000';
+        const numAmount = parseFloat(amount.replace(',', '.'));
+        if (!numAmount || !price) return mode === 'buy' ? '0.00000000' : 'R$ 0,00';
+        
         if (mode === 'buy') {
-            return (Number(amount) / price).toFixed(8);
+            return (numAmount / price).toFixed(8);
         } else {
-            return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(Number(amount) * price);
+            return formatBRL(numAmount * price);
         }
     };
 
     return (
         <SafeAreaView className="flex-1 bg-dark">
-            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className="flex-1 px-6 pt-4">
-                <Text className="text-white text-3xl font-bold mb-8">Negociar</Text>
+            <StatusBar barStyle="light-content" backgroundColor="#0F172A" />
+            <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} className="flex-1 px-6 pt-6">
+                <Text className="text-white text-3xl font-extrabold tracking-tight mb-6">Negociar</Text>
 
-                {/* Tabs */}
-                <View className="flex-row bg-dark-secondary p-1 rounded-2xl mb-8">
+                <View className="flex-row bg-dark-secondary p-1.5 rounded-2xl mb-8 border border-white/5">
                     <TouchableOpacity 
                         onPress={() => setMode('buy')}
-                        className={`flex-1 flex-row items-center justify-center p-4 rounded-xl ${mode === 'buy' ? 'bg-success' : ''}`}
+                        className={`flex-1 flex-row items-center justify-center py-3 rounded-xl ${mode === 'buy' ? 'bg-success' : ''}`}
                     >
-                        <ArrowDownLeft size={20} color={mode === 'buy' ? '#0B0E11' : '#0ECB81'} />
-                        <Text className={`font-bold ml-2 ${mode === 'buy' ? 'text-dark' : 'text-success'}`}>Comprar</Text>
+                        <ArrowDownLeft size={18} color={mode === 'buy' ? '#ffffff' : '#10B981'} strokeWidth={2.5} />
+                        <Text className={`font-bold ml-2 tracking-wide ${mode === 'buy' ? 'text-white' : 'text-gray-text'}`}>Comprar</Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
                         onPress={() => setMode('sell')}
-                        className={`flex-1 flex-row items-center justify-center p-4 rounded-xl ${mode === 'sell' ? 'bg-danger' : ''}`}
+                        className={`flex-1 flex-row items-center justify-center py-3 rounded-xl ${mode === 'sell' ? 'bg-danger' : ''}`}
                     >
-                        <ArrowUpRight size={20} color={mode === 'sell' ? '#0B0E11' : '#F6465D'} />
-                        <Text className={`font-bold ml-2 ${mode === 'sell' ? 'text-dark' : 'text-danger'}`}>Vender</Text>
+                        <ArrowUpRight size={18} color={mode === 'sell' ? '#ffffff' : '#EF4444'} strokeWidth={2.5} />
+                        <Text className={`font-bold ml-2 tracking-wide ${mode === 'sell' ? 'text-white' : 'text-gray-text'}`}>Vender</Text>
                     </TouchableOpacity>
                 </View>
 
-                {/* Price Info */}
-                <View className="items-center mb-8">
-                    <Text className="text-gray-text text-lg">Preço atual do BTC</Text>
-                    <Text className="text-white text-2xl font-bold">
-                        {price ? new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(price) : '---'}
-                    </Text>
+                <View className="items-center mb-8 bg-dark-secondary/30 p-4 rounded-3xl border border-white/5">
+                    <Text className="text-gray-text text-sm font-medium mb-1">Cotação Atual (BTC)</Text>
+                    <View className="flex-row items-center">
+                        <TrendingUp size={20} color="#3B82F6" />
+                        <Text className="text-white text-3xl font-bold tracking-tight ml-2">
+                            {price ? formatBRL(price) : '---'}
+                        </Text>
+                    </View>
                 </View>
 
-                {/* Input Section */}
-                <View className="bg-dark-secondary p-6 rounded-3xl border border-gray-800">
-                    <Text className="text-gray-text mb-4">
+                <View className="bg-dark-secondary/60 p-6 rounded-3xl border border-white/5">
+                    <Text className="text-gray-text mb-4 font-medium">
                         {mode === 'buy' ? 'Quanto deseja investir (R$)?' : 'Quanto deseja vender (BTC)?'}
                     </Text>
-                    <TextInput 
-                        className="text-white text-4xl font-bold mb-6"
-                        placeholder="0.00"
-                        placeholderTextColor="#4A4A4A"
-                        keyboardType="numeric"
-                        value={amount}
-                        onChangeText={setAmount}
-                    />
                     
-                    <View className="border-t border-gray-800 pt-6">
-                        <Text className="text-gray-text text-sm">Estimativa de recebimento:</Text>
-                        <Text className={`text-xl font-bold ${mode === 'buy' ? 'text-success' : 'text-white'}`}>
+                    <View className="flex-row items-center border-b border-gray-700/50 pb-2 mb-6">
+                        <Text className="text-white text-3xl font-bold mr-2">{mode === 'buy' ? 'R$' : '₿'}</Text>
+                        <TextInput 
+                            className="flex-1 text-white text-4xl font-bold"
+                            placeholder="0,00"
+                            placeholderTextColor="#475569"
+                            keyboardType="numeric"
+                            value={amount}
+                            onChangeText={setAmount}
+                        />
+                    </View>
+                    
+                    <View>
+                        <Text className="text-gray-text text-sm mb-1">Você deve receber aproximadamente:</Text>
+                        <Text className={`text-2xl font-bold tracking-tight ${mode === 'buy' ? 'text-success' : 'text-primary-light'}`}>
                             {calculatedEstimate()} {mode === 'buy' ? 'BTC' : ''}
                         </Text>
                     </View>
                 </View>
 
-                <View className="mt-8">
-                     <View className="flex-row justify-between mb-4 px-2">
-                        <Text className="text-gray-text">Disponível:</Text>
-                        <Text className="text-white font-medium">
+                <View className="mt-auto mb-24">
+                    <View className="flex-row justify-between mb-4 px-2">
+                        <Text className="text-gray-text font-medium">Saldo Disponível:</Text>
+                        <Text className="text-white font-bold">
                             {mode === 'buy' ? 
-                                new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(user?.balance_brl || 0) :
-                                `${user?.balance_btc.toFixed(8)} BTC`
+                                formatBRL(user?.balance_brl || 0) :
+                                (user?.balance_btc || 0).toFixed(8) + ' BTC'
                             }
                         </Text>
                     </View>
@@ -125,12 +137,12 @@ const TradeScreen = () => {
                     <TouchableOpacity 
                         onPress={handleTrade}
                         disabled={loading}
-                        className={`p-5 rounded-2xl items-center ${mode === 'buy' ? 'bg-success' : 'bg-danger'}`}
+                        className={`py-5 rounded-2xl items-center shadow-lg ${mode === 'buy' ? 'bg-success' : 'bg-danger'}`}
                     >
                         {loading ? (
-                            <ActivityIndicator color="#0B0E11" />
+                            <ActivityIndicator color="#ffffff" />
                         ) : (
-                            <Text className="text-dark font-bold text-lg">
+                            <Text className="text-white font-bold text-lg tracking-wide uppercase">
                                 Confirmar {mode === 'buy' ? 'Compra' : 'Venda'}
                             </Text>
                         )}

@@ -12,21 +12,27 @@ const AppRoutes: React.FC = () => (
         screenOptions={{
             headerShown: false,
             tabBarStyle: {
-                backgroundColor: '#1E2329',
-                borderTopColor: '#2B3139',
-                height: 60,
-                paddingBottom: 10,
-                paddingTop: 5,
+                backgroundColor: '#0F172A',
+                borderTopColor: '#1E293B',
+                height: 70,
+                paddingBottom: 12,
+                paddingTop: 8,
+                borderTopWidth: 1,
+                elevation: 0,
             },
-            tabBarActiveTintColor: '#F3BA2F',
-            tabBarInactiveTintColor: '#848E9C',
+            tabBarActiveTintColor: '#3B82F6',
+            tabBarInactiveTintColor: '#64748B',
+            tabBarLabelStyle: {
+                fontWeight: '600',
+                fontSize: 11,
+            }
         }}
     >
         <Tab.Screen 
             name="Home" 
             component={DashboardScreen} 
             options={{
-                tabBarIcon: ({ color, size }) => <Home size={size} color={color} />,
+                tabBarIcon: ({ color, size }) => <Home size={22} color={color} strokeWidth={2.5} />,
                 tabBarLabel: 'Início'
             }}
         />
@@ -34,7 +40,7 @@ const AppRoutes: React.FC = () => (
             name="Trade" 
             component={TradeScreen} 
             options={{
-                tabBarIcon: ({ color, size }) => <Repeat size={size} color={color} />,
+                tabBarIcon: ({ color, size }) => <Repeat size={22} color={color} strokeWidth={2.5} />,
                 tabBarLabel: 'Trade'
             }}
         />
@@ -42,7 +48,7 @@ const AppRoutes: React.FC = () => (
             name="History" 
             component={HistoryScreen} 
             options={{
-                tabBarIcon: ({ color, size }) => <Clock size={size} color={color} />,
+                tabBarIcon: ({ color, size }) => <Clock size={22} color={color} strokeWidth={2.5} />,
                 tabBarLabel: 'Histórico'
             }}
         />
