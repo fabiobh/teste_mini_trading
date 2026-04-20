@@ -18,6 +18,7 @@ Interface de compra e venda com cálculos dinâmicos e feedback visual.
 
 ### 📜 Histórico
 Lista de transações detalhada com status e valores.
+
 ![History](assets/screenshots/history.png)
 
 ## 🚀 Como Executar o App
